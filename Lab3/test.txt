@@ -1,0 +1,29 @@
+var
+readInt readString
+while while
+if
+(
+;
+[]
+{
+
+}
++
+-
+*
+/
+%
+>=
+<=
+>
+!=
+a
+b
+a
+Aa2a
+'s'
+"simo"
+1
+2
++4
+-4

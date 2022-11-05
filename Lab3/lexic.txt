@@ -1,0 +1,29 @@
+Alphabet:
+a. Upper(A-Z) and lower case letter(a-z) of the English alphabet
+b. Decimal digits (0-9)
+
+Lexic
+a. Special symbols, representing:
+   - operators: + - * / == < <= = > >= !=
+   - separators: [] {} () ; space , "
+   - reserved words: var, readInt, readString, readChar, if, else, while, write, of, array
+
+b. Identifiers
+   - a sequence of letters and digits, such that the first character is a letter, the rule is:
+     identifier = letter{(letter | digit)}
+     letter = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+     digit = "0" | "1" | ... | "9"
+
+c. Constants
+   1. integer
+      constInt= [sign] nonZeroDigit {digit} | "0"
+      sign = "+" | "-"
+      nonZeroDigit = "1" | "2" | ... | "9"
+      constPositiveInt = nonZeroDigit {digit}
+
+   2. character
+      contChar= "'" char "'"
+      char = letter | digit
+   
+   3. string
+      constString= """ {char} """
