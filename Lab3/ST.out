@@ -1,4 +1,4 @@
 ST for identifiers: 
-[[], [isPrime, i], [], [], [], [], [n], []]
+[[], [isprime, i], [], [], [], [], [n], []]
 ST for constants: 
-[[0], [1], [2, "It is prime"], ["It is not prime"], [], [], [], ['a']]
+[[0], [1, "prime"], [2, "notprime"], [], [], [], [], ['a']]

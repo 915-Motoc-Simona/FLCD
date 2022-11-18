@@ -68,7 +68,7 @@ const 1 0
 { -1
 write -1
 ( -1
-const 2 1
+const 1 1
 ) -1
 ; -1
 } -1
@@ -76,7 +76,7 @@ else -1
 { -1
 write -1
 ( -1
-const 3 0
+const 2 1
 ) -1
 ; -1
 } -1

@@ -1,17 +1,17 @@
-var n, isPrime, i, i;
+var n, isprime, i, i;
 n = readInt();
 i = 'a';
 i = 2;
-isPrime = 0;
-while( i*i <= n and isPrime==0){
+isprime = 0;
+while( i*i <= n and isprime==0){
 	if( n%i==0){
-		isPrime = 1;
+		isprime = 1;
 	}
 	i = i + 1;
 }
-if(isPrime == 1){
-	write("It is prime");
+if(isprime == 1){
+	write("prime");
 }
 else{
-	write("It is not prime");
+	write("notprime");
 }

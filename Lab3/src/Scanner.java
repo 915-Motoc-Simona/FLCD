@@ -17,11 +17,17 @@ public class Scanner {
     private final String SEPARATOR_REGEX = "^[\\n;,()}{\\]\\[]";
     private final String RESERVED_WORDS_REGEX = "^(var|readInt|readReal|readString|and|AND|or|OR|not|NOT|readChar|if|else|while|write|of|array)";
 
+    private FiniteAutomata finiteAutomataIdentifiers;
+
+    private FiniteAutomata finiteAutomataConstants;
+
     public Scanner(SymbolTable symbolTableConstants, SymbolTable symbolTableIdentifiers, String tokenFile) throws Exception {
         this.symbolTableConstants = symbolTableConstants;
         this.symbolTableIdentifiers = symbolTableIdentifiers;
         pif = new ArrayList<>();
         readTokens(tokenFile);
+        finiteAutomataIdentifiers = new FiniteAutomata("finite-automata-identifiers.in");
+        finiteAutomataConstants = new FiniteAutomata("finite-automata-constants.in");
     }
 
     private void readTokens(String tokenFile) {
@@ -47,7 +53,7 @@ public class Scanner {
             boolean found;
             while((line = bufferedReader.readLine()) != null && correct){
                 while(!line.isEmpty()){
-//                    System.out.println(lineNumber + " " + line);
+                    System.out.println(lineNumber + " " + line);
                     found = false;
                     line = line.strip();
 
@@ -77,7 +83,7 @@ public class Scanner {
 
                     pattern = Pattern.compile(IDENTIFIER_REGEX);
                     matcher = pattern.matcher(line);
-                    if (matcher.find() && matcher.start() == 0) {
+                    if (matcher.find() && matcher.start() == 0 && finiteAutomataIdentifiers.isAcceptedByFA(matcher.group())) {
                         int pos = symbolTableIdentifiers.addSymbol(matcher.group());
                         int posInBucket = symbolTableIdentifiers.getPositionInBucket(matcher.group());
                         pif.add(new Pair("id", new Pair<>(pos, posInBucket)));
@@ -87,7 +93,7 @@ public class Scanner {
 
                     pattern = Pattern.compile(ONLY_DIGITS_REGEX);
                     matcher = pattern.matcher(line);
-                    if (matcher.find() && matcher.start() == 0) {
+                    if (matcher.find() && matcher.start() == 0 && finiteAutomataConstants.isAcceptedByFA(matcher.group())) {
                         int pos = symbolTableConstants.addSymbol(matcher.group());
                         int posInBucket = symbolTableConstants.getPositionInBucket(matcher.group());
                         pif.add(new Pair("const", new Pair<>(pos, posInBucket)));
@@ -97,7 +103,7 @@ public class Scanner {
 
                     pattern = Pattern.compile(CHAR_CONSTANT_REGEX);
                     matcher = pattern.matcher(line);
-                    if (matcher.find() && matcher.start() == 0) {
+                    if (matcher.find() && matcher.start() == 0 && finiteAutomataConstants.isAcceptedByFA(matcher.group())) {
                         int pos = symbolTableConstants.addSymbol(matcher.group());
                         int posInBucket = symbolTableConstants.getPositionInBucket(matcher.group());
                         pif.add(new Pair("const", new Pair<>(pos, posInBucket)));
@@ -107,7 +113,7 @@ public class Scanner {
 
                     pattern = Pattern.compile(STRING_CONSTANT_REGEX);
                     matcher = pattern.matcher(line);
-                    if (matcher.find() && matcher.start() == 0) {
+                    if (matcher.find() && matcher.start() == 0 && finiteAutomataConstants.isAcceptedByFA(matcher.group())) {
                         int pos = symbolTableConstants.addSymbol(matcher.group());
                         int posInBucket = symbolTableConstants.getPositionInBucket(matcher.group());
                         pif.add(new Pair("const", new Pair<>(pos, posInBucket)));

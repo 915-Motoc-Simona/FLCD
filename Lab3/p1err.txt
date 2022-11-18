@@ -1,5 +1,5 @@
-var 2a;
 var a, prime, i;
+var 2a;
 a = readInt();
 i = 2;
 prime = 0;
