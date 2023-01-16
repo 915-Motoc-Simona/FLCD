@@ -1,0 +1,8 @@
+flex lang.lxi
+gcc lex.yy.c -L "C:\GnuWin32\lib" -lfl
+a.exe p1.txt
+
+flex lang.lxi
+bison -dy -v lang.y
+gcc lex.yy.c y.tab.c
+a.exe p1.txt

@@ -1,0 +1,70 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int lines = 0;
+%}
+
+%option noyywrap
+%option caseless
+
+DIGIT [0-9]
+NON_ZERO_DIGIT [1-9]
+INT_CONSTANT [+-]?{NON_ZERO_DIGIT}{DIGIT}*|0
+LETTER [a-zA-Z]
+STRING_CONSTANT \"({LETTER}|{DIGIT})*\"
+CHARACTER_CONSTANT \'({LETTER}|{DIGIT})\'
+IDENTIFIER {LETTER}({LETTER}|{DIGIT})*
+
+%%
+
+var {printf("Reserved word: %s\n", yytext);}
+readInt {printf("Reserved word: %s\n", yytext);}
+readString {printf("Reserved word: %s\n", yytext);}
+readChar {printf("Reserved word: %s\n", yytext);}
+if {printf("Reserved word: %s\n", yytext);}
+else {printf("Reserved word: %s\n", yytext);}
+while {printf("Reserved word: %s\n", yytext);}
+write {printf("Reserved word: %s\n", yytext);}
+of {printf("Reserved word: %s\n", yytext);}
+array {printf("Reserved word: %s\n", yytext);}
+
+"{"	{printf( "Separator: %s\n", yytext );}
+"}"	{printf( "Separator: %s\n", yytext );}
+"("	{printf( "Separator: %s\n", yytext );}
+")"	{printf( "Separator: %s\n", yytext );}
+"["	{printf( "Separator: %s\n", yytext );}
+"]"	{printf( "Separator: %s\n", yytext );}
+";"	{printf( "Separator: %s\n", yytext );}
+","	{printf( "Separator: %s\n", yytext );}
+
+"+"	{printf( "Operator: %s\n", yytext );}
+"-"	{printf( "Operator: %s\n", yytext );}
+"*"	{printf( "Operator: %s\n", yytext );}
+"/"	{printf( "Operator: %s\n", yytext );}
+"%"	{printf( "Operator: %s\n", yytext );}
+"==" {printf( "Operator: %s\n", yytext );}
+"<"	{printf( "Operator: %s\n", yytext );}
+"<=" {printf( "Operator: %s\n", yytext );}
+">"	{printf( "Operator: %s\n", yytext );}
+">=" {printf( "Operator: %s\n", yytext );}
+"=" {printf( "Operator: %s\n", yytext );}
+"!=" {printf( "Operator: %s\n", yytext );}
+
+{IDENTIFIER}	{printf( "Identifier: %s\n", yytext);}
+
+{INT_CONSTANT}	{printf( "Int Constant: %s\n", yytext );}
+{STRING_CONSTANT}	{printf( "String Constant: %s\n", yytext );}
+{CHARACTER_CONSTANT}	{printf( "Character Constant: %s\n", yytext );}
+
+[ \t]+  	{}
+[\n]+ {lines++;}
+
+[+-]?0[0-9]* {printf("Illegal int constant at line %d\n", lines);}
+
+[0-9~@#$%^][a-zA-Z0-9]{0,7} {printf("Illegal identifier at line %d\n", lines);}
+
+\'[a-zA-Z0-9]{2,}\' {printf("Character of length >=2 at line %d\n", lines);}
+
+%%

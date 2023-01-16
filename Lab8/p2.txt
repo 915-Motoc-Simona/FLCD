@@ -1,0 +1,17 @@
+var n, n, i, i;
+n = readInt();
+i = 'a';
+i = 2;
+isPrime=0;
+while( i*i <= n and isPrime==0){
+	if( n%i==0){
+		isPrime = 1;
+	}
+	i = i + 1;
+}
+if(isPrime == 1){
+	write("It is prime");
+}
+else{
+	write("It is not prime");
+}

@@ -1,0 +1,1143 @@
+Grammar
+
+    0 $accept: program $end
+
+    1 program: statementList
+
+    2 statementList: statement
+    3              | statement statementList
+
+    4 statement: simpleStatement SEMICOLON
+    5          | structStatement
+
+    6 simpleStatement: varDeclaration
+    7                | arrayDeclaration
+    8                | assignmentStatement
+    9                | returnStatement
+   10                | ioStatement
+
+   11 structStatement: compoundStatement
+   12                | ifStatement
+   13                | whileStatement
+
+   14 compoundStatement: OPEN_CURLY_BRACKET statementList CLOSE_CURLY_BRACKET
+
+   15 ifStatement: IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement
+   16            | IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement ELSE compoundStatement
+
+   17 whileStatement: WHILE OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement
+
+   18 condition: expression relation expression additionalCondition
+
+   19 additionalCondition: /* empty */
+   20                    | AND condition
+   21                    | OR condition
+
+   22 relation: BIGGER
+   23         | BIGGEREQ
+   24         | LESS
+   25         | LESSEQ
+   26         | EQQ
+   27         | NEQ
+
+   28 expression: expression symbol_1 term
+   29           | term
+
+   30 term: term symbol_2 factor
+   31     | factor
+
+   32 factor: OPEN_ROUND_BRACKET expression CLOSE_ROUND_BRACKET
+   33       | INTCONSTANT
+   34       | STRINGCONSTANT
+   35       | CHARCONSTANT
+   36       | IDENTIFIER
+
+   37 symbol_1: PLUS
+   38         | MINUS
+
+   39 symbol_2: TIMES
+   40         | DIV
+   41         | MOD
+
+   42 expressionList: expression
+   43               | expression COMMA expressionListTemp
+
+   44 expressionListTemp: /* empty */
+   45                   | expressionList
+
+   46 varDeclaration: VAR identifierList
+
+   47 identifierList: IDENTIFIER
+   48               | IDENTIFIER COMMA identifierListTemp
+
+   49 identifierListTemp: /* empty */
+   50                   | identifierList
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET identifierList OF type
+
+   52 type: INT
+   53     | CHAR
+
+   54 assignmentStatement: IDENTIFIER EQ expression
+
+   55 returnStatement: RETURN expression
+
+   56 ioStatement: functionName OPEN_ROUND_BRACKET expressionList CLOSE_ROUND_BRACKET
+   57            | functionName OPEN_ROUND_BRACKET CLOSE_ROUND_BRACKET
+
+   58 functionName: WRITE
+   59             | READINT
+   60             | READSTRING
+   61             | READCHAR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ARRAY (258) 51
+OF (259) 51
+VAR (260) 46
+IF (261) 15 16
+WRITE (262) 58
+READINT (263) 59
+READSTRING (264) 60
+READCHAR (265) 61
+ELSE (266) 16
+WHILE (267) 17
+RETURN (268) 55
+IDENTIFIER (269) 36 47 48 54
+INTCONSTANT (270) 33 51
+STRINGCONSTANT (271) 34
+CHARCONSTANT (272) 35
+PLUS (273) 37
+MINUS (274) 38
+TIMES (275) 39
+DIV (276) 40
+MOD (277) 41
+EQ (278) 54
+BIGGER (279) 22
+BIGGEREQ (280) 23
+LESS (281) 24
+LESSEQ (282) 25
+EQQ (283) 26
+NEQ (284) 27
+AND (285) 20
+OR (286) 21
+SEMICOLON (287) 4
+OPEN_CURLY_BRACKET (288) 14
+CLOSE_CURLY_BRACKET (289) 14
+OPEN_ROUND_BRACKET (290) 15 16 17 32 56 57
+CLOSE_ROUND_BRACKET (291) 15 16 17 32 56 57
+OPEN_SQUARE_BRACKET (292) 51
+CLOSE_SQUARE_BRACKET (293) 51
+COMMA (294) 43 48
+INT (295) 52
+CHAR (296) 53
+
+
+Nonterminals, with rules where they appear
+
+$accept (42)
+    on left: 0
+program (43)
+    on left: 1, on right: 0
+statementList (44)
+    on left: 2 3, on right: 1 3 14
+statement (45)
+    on left: 4 5, on right: 2 3
+simpleStatement (46)
+    on left: 6 7 8 9 10, on right: 4
+structStatement (47)
+    on left: 11 12 13, on right: 5
+compoundStatement (48)
+    on left: 14, on right: 11 15 16 17
+ifStatement (49)
+    on left: 15 16, on right: 12
+whileStatement (50)
+    on left: 17, on right: 13
+condition (51)
+    on left: 18, on right: 15 16 17 20 21
+additionalCondition (52)
+    on left: 19 20 21, on right: 18
+relation (53)
+    on left: 22 23 24 25 26 27, on right: 18
+expression (54)
+    on left: 28 29, on right: 18 28 32 42 43 54 55
+term (55)
+    on left: 30 31, on right: 28 29 30
+factor (56)
+    on left: 32 33 34 35 36, on right: 30 31
+symbol_1 (57)
+    on left: 37 38, on right: 28
+symbol_2 (58)
+    on left: 39 40 41, on right: 30
+expressionList (59)
+    on left: 42 43, on right: 45 56
+expressionListTemp (60)
+    on left: 44 45, on right: 43
+varDeclaration (61)
+    on left: 46, on right: 6
+identifierList (62)
+    on left: 47 48, on right: 46 50 51
+identifierListTemp (63)
+    on left: 49 50, on right: 48
+arrayDeclaration (64)
+    on left: 51, on right: 7
+type (65)
+    on left: 52 53, on right: 51
+assignmentStatement (66)
+    on left: 54, on right: 8
+returnStatement (67)
+    on left: 55, on right: 9
+ioStatement (68)
+    on left: 56 57, on right: 10
+functionName (69)
+    on left: 58 59 60 61, on right: 56 57
+
+
+state 0
+
+    0 $accept: . program $end
+
+    ARRAY               shift, and go to state 1
+    VAR                 shift, and go to state 2
+    IF                  shift, and go to state 3
+    WRITE               shift, and go to state 4
+    READINT             shift, and go to state 5
+    READSTRING          shift, and go to state 6
+    READCHAR            shift, and go to state 7
+    WHILE               shift, and go to state 8
+    RETURN              shift, and go to state 9
+    IDENTIFIER          shift, and go to state 10
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    program              go to state 12
+    statementList        go to state 13
+    statement            go to state 14
+    simpleStatement      go to state 15
+    structStatement      go to state 16
+    compoundStatement    go to state 17
+    ifStatement          go to state 18
+    whileStatement       go to state 19
+    varDeclaration       go to state 20
+    arrayDeclaration     go to state 21
+    assignmentStatement  go to state 22
+    returnStatement      go to state 23
+    ioStatement          go to state 24
+    functionName         go to state 25
+
+
+state 1
+
+   51 arrayDeclaration: ARRAY . OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET identifierList OF type
+
+    OPEN_SQUARE_BRACKET  shift, and go to state 26
+
+
+state 2
+
+   46 varDeclaration: VAR . identifierList
+
+    IDENTIFIER  shift, and go to state 27
+
+    identifierList  go to state 28
+
+
+state 3
+
+   15 ifStatement: IF . OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement
+   16            | IF . OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement ELSE compoundStatement
+
+    OPEN_ROUND_BRACKET  shift, and go to state 29
+
+
+state 4
+
+   58 functionName: WRITE .
+
+    $default  reduce using rule 58 (functionName)
+
+
+state 5
+
+   59 functionName: READINT .
+
+    $default  reduce using rule 59 (functionName)
+
+
+state 6
+
+   60 functionName: READSTRING .
+
+    $default  reduce using rule 60 (functionName)
+
+
+state 7
+
+   61 functionName: READCHAR .
+
+    $default  reduce using rule 61 (functionName)
+
+
+state 8
+
+   17 whileStatement: WHILE . OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement
+
+    OPEN_ROUND_BRACKET  shift, and go to state 30
+
+
+state 9
+
+   55 returnStatement: RETURN . expression
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    expression  go to state 36
+    term        go to state 37
+    factor      go to state 38
+
+
+state 10
+
+   54 assignmentStatement: IDENTIFIER . EQ expression
+
+    EQ  shift, and go to state 39
+
+
+state 11
+
+   14 compoundStatement: OPEN_CURLY_BRACKET . statementList CLOSE_CURLY_BRACKET
+
+    ARRAY               shift, and go to state 1
+    VAR                 shift, and go to state 2
+    IF                  shift, and go to state 3
+    WRITE               shift, and go to state 4
+    READINT             shift, and go to state 5
+    READSTRING          shift, and go to state 6
+    READCHAR            shift, and go to state 7
+    WHILE               shift, and go to state 8
+    RETURN              shift, and go to state 9
+    IDENTIFIER          shift, and go to state 10
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    statementList        go to state 40
+    statement            go to state 14
+    simpleStatement      go to state 15
+    structStatement      go to state 16
+    compoundStatement    go to state 17
+    ifStatement          go to state 18
+    whileStatement       go to state 19
+    varDeclaration       go to state 20
+    arrayDeclaration     go to state 21
+    assignmentStatement  go to state 22
+    returnStatement      go to state 23
+    ioStatement          go to state 24
+    functionName         go to state 25
+
+
+state 12
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 41
+
+
+state 13
+
+    1 program: statementList .
+
+    $default  reduce using rule 1 (program)
+
+
+state 14
+
+    2 statementList: statement .
+    3              | statement . statementList
+
+    ARRAY               shift, and go to state 1
+    VAR                 shift, and go to state 2
+    IF                  shift, and go to state 3
+    WRITE               shift, and go to state 4
+    READINT             shift, and go to state 5
+    READSTRING          shift, and go to state 6
+    READCHAR            shift, and go to state 7
+    WHILE               shift, and go to state 8
+    RETURN              shift, and go to state 9
+    IDENTIFIER          shift, and go to state 10
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    $default  reduce using rule 2 (statementList)
+
+    statementList        go to state 42
+    statement            go to state 14
+    simpleStatement      go to state 15
+    structStatement      go to state 16
+    compoundStatement    go to state 17
+    ifStatement          go to state 18
+    whileStatement       go to state 19
+    varDeclaration       go to state 20
+    arrayDeclaration     go to state 21
+    assignmentStatement  go to state 22
+    returnStatement      go to state 23
+    ioStatement          go to state 24
+    functionName         go to state 25
+
+
+state 15
+
+    4 statement: simpleStatement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 43
+
+
+state 16
+
+    5 statement: structStatement .
+
+    $default  reduce using rule 5 (statement)
+
+
+state 17
+
+   11 structStatement: compoundStatement .
+
+    $default  reduce using rule 11 (structStatement)
+
+
+state 18
+
+   12 structStatement: ifStatement .
+
+    $default  reduce using rule 12 (structStatement)
+
+
+state 19
+
+   13 structStatement: whileStatement .
+
+    $default  reduce using rule 13 (structStatement)
+
+
+state 20
+
+    6 simpleStatement: varDeclaration .
+
+    $default  reduce using rule 6 (simpleStatement)
+
+
+state 21
+
+    7 simpleStatement: arrayDeclaration .
+
+    $default  reduce using rule 7 (simpleStatement)
+
+
+state 22
+
+    8 simpleStatement: assignmentStatement .
+
+    $default  reduce using rule 8 (simpleStatement)
+
+
+state 23
+
+    9 simpleStatement: returnStatement .
+
+    $default  reduce using rule 9 (simpleStatement)
+
+
+state 24
+
+   10 simpleStatement: ioStatement .
+
+    $default  reduce using rule 10 (simpleStatement)
+
+
+state 25
+
+   56 ioStatement: functionName . OPEN_ROUND_BRACKET expressionList CLOSE_ROUND_BRACKET
+   57            | functionName . OPEN_ROUND_BRACKET CLOSE_ROUND_BRACKET
+
+    OPEN_ROUND_BRACKET  shift, and go to state 44
+
+
+state 26
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET . INTCONSTANT CLOSE_SQUARE_BRACKET identifierList OF type
+
+    INTCONSTANT  shift, and go to state 45
+
+
+state 27
+
+   47 identifierList: IDENTIFIER .
+   48               | IDENTIFIER . COMMA identifierListTemp
+
+    COMMA  shift, and go to state 46
+
+    $default  reduce using rule 47 (identifierList)
+
+
+state 28
+
+   46 varDeclaration: VAR identifierList .
+
+    $default  reduce using rule 46 (varDeclaration)
+
+
+state 29
+
+   15 ifStatement: IF OPEN_ROUND_BRACKET . condition CLOSE_ROUND_BRACKET compoundStatement
+   16            | IF OPEN_ROUND_BRACKET . condition CLOSE_ROUND_BRACKET compoundStatement ELSE compoundStatement
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    condition   go to state 47
+    expression  go to state 48
+    term        go to state 37
+    factor      go to state 38
+
+
+state 30
+
+   17 whileStatement: WHILE OPEN_ROUND_BRACKET . condition CLOSE_ROUND_BRACKET compoundStatement
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    condition   go to state 49
+    expression  go to state 48
+    term        go to state 37
+    factor      go to state 38
+
+
+state 31
+
+   36 factor: IDENTIFIER .
+
+    $default  reduce using rule 36 (factor)
+
+
+state 32
+
+   33 factor: INTCONSTANT .
+
+    $default  reduce using rule 33 (factor)
+
+
+state 33
+
+   34 factor: STRINGCONSTANT .
+
+    $default  reduce using rule 34 (factor)
+
+
+state 34
+
+   35 factor: CHARCONSTANT .
+
+    $default  reduce using rule 35 (factor)
+
+
+state 35
+
+   32 factor: OPEN_ROUND_BRACKET . expression CLOSE_ROUND_BRACKET
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    expression  go to state 50
+    term        go to state 37
+    factor      go to state 38
+
+
+state 36
+
+   28 expression: expression . symbol_1 term
+   55 returnStatement: RETURN expression .
+
+    PLUS   shift, and go to state 51
+    MINUS  shift, and go to state 52
+
+    $default  reduce using rule 55 (returnStatement)
+
+    symbol_1  go to state 53
+
+
+state 37
+
+   29 expression: term .
+   30 term: term . symbol_2 factor
+
+    TIMES  shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 29 (expression)
+
+    symbol_2  go to state 57
+
+
+state 38
+
+   31 term: factor .
+
+    $default  reduce using rule 31 (term)
+
+
+state 39
+
+   54 assignmentStatement: IDENTIFIER EQ . expression
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    expression  go to state 58
+    term        go to state 37
+    factor      go to state 38
+
+
+state 40
+
+   14 compoundStatement: OPEN_CURLY_BRACKET statementList . CLOSE_CURLY_BRACKET
+
+    CLOSE_CURLY_BRACKET  shift, and go to state 59
+
+
+state 41
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 42
+
+    3 statementList: statement statementList .
+
+    $default  reduce using rule 3 (statementList)
+
+
+state 43
+
+    4 statement: simpleStatement SEMICOLON .
+
+    $default  reduce using rule 4 (statement)
+
+
+state 44
+
+   56 ioStatement: functionName OPEN_ROUND_BRACKET . expressionList CLOSE_ROUND_BRACKET
+   57            | functionName OPEN_ROUND_BRACKET . CLOSE_ROUND_BRACKET
+
+    IDENTIFIER           shift, and go to state 31
+    INTCONSTANT          shift, and go to state 32
+    STRINGCONSTANT       shift, and go to state 33
+    CHARCONSTANT         shift, and go to state 34
+    OPEN_ROUND_BRACKET   shift, and go to state 35
+    CLOSE_ROUND_BRACKET  shift, and go to state 60
+
+    expression      go to state 61
+    term            go to state 37
+    factor          go to state 38
+    expressionList  go to state 62
+
+
+state 45
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT . CLOSE_SQUARE_BRACKET identifierList OF type
+
+    CLOSE_SQUARE_BRACKET  shift, and go to state 63
+
+
+state 46
+
+   48 identifierList: IDENTIFIER COMMA . identifierListTemp
+
+    IDENTIFIER  shift, and go to state 27
+
+    $default  reduce using rule 49 (identifierListTemp)
+
+    identifierList      go to state 64
+    identifierListTemp  go to state 65
+
+
+state 47
+
+   15 ifStatement: IF OPEN_ROUND_BRACKET condition . CLOSE_ROUND_BRACKET compoundStatement
+   16            | IF OPEN_ROUND_BRACKET condition . CLOSE_ROUND_BRACKET compoundStatement ELSE compoundStatement
+
+    CLOSE_ROUND_BRACKET  shift, and go to state 66
+
+
+state 48
+
+   18 condition: expression . relation expression additionalCondition
+   28 expression: expression . symbol_1 term
+
+    PLUS      shift, and go to state 51
+    MINUS     shift, and go to state 52
+    BIGGER    shift, and go to state 67
+    BIGGEREQ  shift, and go to state 68
+    LESS      shift, and go to state 69
+    LESSEQ    shift, and go to state 70
+    EQQ       shift, and go to state 71
+    NEQ       shift, and go to state 72
+
+    relation  go to state 73
+    symbol_1  go to state 53
+
+
+state 49
+
+   17 whileStatement: WHILE OPEN_ROUND_BRACKET condition . CLOSE_ROUND_BRACKET compoundStatement
+
+    CLOSE_ROUND_BRACKET  shift, and go to state 74
+
+
+state 50
+
+   28 expression: expression . symbol_1 term
+   32 factor: OPEN_ROUND_BRACKET expression . CLOSE_ROUND_BRACKET
+
+    PLUS                 shift, and go to state 51
+    MINUS                shift, and go to state 52
+    CLOSE_ROUND_BRACKET  shift, and go to state 75
+
+    symbol_1  go to state 53
+
+
+state 51
+
+   37 symbol_1: PLUS .
+
+    $default  reduce using rule 37 (symbol_1)
+
+
+state 52
+
+   38 symbol_1: MINUS .
+
+    $default  reduce using rule 38 (symbol_1)
+
+
+state 53
+
+   28 expression: expression symbol_1 . term
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    term    go to state 76
+    factor  go to state 38
+
+
+state 54
+
+   39 symbol_2: TIMES .
+
+    $default  reduce using rule 39 (symbol_2)
+
+
+state 55
+
+   40 symbol_2: DIV .
+
+    $default  reduce using rule 40 (symbol_2)
+
+
+state 56
+
+   41 symbol_2: MOD .
+
+    $default  reduce using rule 41 (symbol_2)
+
+
+state 57
+
+   30 term: term symbol_2 . factor
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    factor  go to state 77
+
+
+state 58
+
+   28 expression: expression . symbol_1 term
+   54 assignmentStatement: IDENTIFIER EQ expression .
+
+    PLUS   shift, and go to state 51
+    MINUS  shift, and go to state 52
+
+    $default  reduce using rule 54 (assignmentStatement)
+
+    symbol_1  go to state 53
+
+
+state 59
+
+   14 compoundStatement: OPEN_CURLY_BRACKET statementList CLOSE_CURLY_BRACKET .
+
+    $default  reduce using rule 14 (compoundStatement)
+
+
+state 60
+
+   57 ioStatement: functionName OPEN_ROUND_BRACKET CLOSE_ROUND_BRACKET .
+
+    $default  reduce using rule 57 (ioStatement)
+
+
+state 61
+
+   28 expression: expression . symbol_1 term
+   42 expressionList: expression .
+   43               | expression . COMMA expressionListTemp
+
+    PLUS   shift, and go to state 51
+    MINUS  shift, and go to state 52
+    COMMA  shift, and go to state 78
+
+    $default  reduce using rule 42 (expressionList)
+
+    symbol_1  go to state 53
+
+
+state 62
+
+   56 ioStatement: functionName OPEN_ROUND_BRACKET expressionList . CLOSE_ROUND_BRACKET
+
+    CLOSE_ROUND_BRACKET  shift, and go to state 79
+
+
+state 63
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET . identifierList OF type
+
+    IDENTIFIER  shift, and go to state 27
+
+    identifierList  go to state 80
+
+
+state 64
+
+   50 identifierListTemp: identifierList .
+
+    $default  reduce using rule 50 (identifierListTemp)
+
+
+state 65
+
+   48 identifierList: IDENTIFIER COMMA identifierListTemp .
+
+    $default  reduce using rule 48 (identifierList)
+
+
+state 66
+
+   15 ifStatement: IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET . compoundStatement
+   16            | IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET . compoundStatement ELSE compoundStatement
+
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    compoundStatement  go to state 81
+
+
+state 67
+
+   22 relation: BIGGER .
+
+    $default  reduce using rule 22 (relation)
+
+
+state 68
+
+   23 relation: BIGGEREQ .
+
+    $default  reduce using rule 23 (relation)
+
+
+state 69
+
+   24 relation: LESS .
+
+    $default  reduce using rule 24 (relation)
+
+
+state 70
+
+   25 relation: LESSEQ .
+
+    $default  reduce using rule 25 (relation)
+
+
+state 71
+
+   26 relation: EQQ .
+
+    $default  reduce using rule 26 (relation)
+
+
+state 72
+
+   27 relation: NEQ .
+
+    $default  reduce using rule 27 (relation)
+
+
+state 73
+
+   18 condition: expression relation . expression additionalCondition
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    expression  go to state 82
+    term        go to state 37
+    factor      go to state 38
+
+
+state 74
+
+   17 whileStatement: WHILE OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET . compoundStatement
+
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    compoundStatement  go to state 83
+
+
+state 75
+
+   32 factor: OPEN_ROUND_BRACKET expression CLOSE_ROUND_BRACKET .
+
+    $default  reduce using rule 32 (factor)
+
+
+state 76
+
+   28 expression: expression symbol_1 term .
+   30 term: term . symbol_2 factor
+
+    TIMES  shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 28 (expression)
+
+    symbol_2  go to state 57
+
+
+state 77
+
+   30 term: term symbol_2 factor .
+
+    $default  reduce using rule 30 (term)
+
+
+state 78
+
+   43 expressionList: expression COMMA . expressionListTemp
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    $default  reduce using rule 44 (expressionListTemp)
+
+    expression          go to state 61
+    term                go to state 37
+    factor              go to state 38
+    expressionList      go to state 84
+    expressionListTemp  go to state 85
+
+
+state 79
+
+   56 ioStatement: functionName OPEN_ROUND_BRACKET expressionList CLOSE_ROUND_BRACKET .
+
+    $default  reduce using rule 56 (ioStatement)
+
+
+state 80
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET identifierList . OF type
+
+    OF  shift, and go to state 86
+
+
+state 81
+
+   15 ifStatement: IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement .
+   16            | IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement . ELSE compoundStatement
+
+    ELSE  shift, and go to state 87
+
+    $default  reduce using rule 15 (ifStatement)
+
+
+state 82
+
+   18 condition: expression relation expression . additionalCondition
+   28 expression: expression . symbol_1 term
+
+    PLUS   shift, and go to state 51
+    MINUS  shift, and go to state 52
+    AND    shift, and go to state 88
+    OR     shift, and go to state 89
+
+    $default  reduce using rule 19 (additionalCondition)
+
+    additionalCondition  go to state 90
+    symbol_1             go to state 53
+
+
+state 83
+
+   17 whileStatement: WHILE OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement .
+
+    $default  reduce using rule 17 (whileStatement)
+
+
+state 84
+
+   45 expressionListTemp: expressionList .
+
+    $default  reduce using rule 45 (expressionListTemp)
+
+
+state 85
+
+   43 expressionList: expression COMMA expressionListTemp .
+
+    $default  reduce using rule 43 (expressionList)
+
+
+state 86
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET identifierList OF . type
+
+    INT   shift, and go to state 91
+    CHAR  shift, and go to state 92
+
+    type  go to state 93
+
+
+state 87
+
+   16 ifStatement: IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement ELSE . compoundStatement
+
+    OPEN_CURLY_BRACKET  shift, and go to state 11
+
+    compoundStatement  go to state 94
+
+
+state 88
+
+   20 additionalCondition: AND . condition
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    condition   go to state 95
+    expression  go to state 48
+    term        go to state 37
+    factor      go to state 38
+
+
+state 89
+
+   21 additionalCondition: OR . condition
+
+    IDENTIFIER          shift, and go to state 31
+    INTCONSTANT         shift, and go to state 32
+    STRINGCONSTANT      shift, and go to state 33
+    CHARCONSTANT        shift, and go to state 34
+    OPEN_ROUND_BRACKET  shift, and go to state 35
+
+    condition   go to state 96
+    expression  go to state 48
+    term        go to state 37
+    factor      go to state 38
+
+
+state 90
+
+   18 condition: expression relation expression additionalCondition .
+
+    $default  reduce using rule 18 (condition)
+
+
+state 91
+
+   52 type: INT .
+
+    $default  reduce using rule 52 (type)
+
+
+state 92
+
+   53 type: CHAR .
+
+    $default  reduce using rule 53 (type)
+
+
+state 93
+
+   51 arrayDeclaration: ARRAY OPEN_SQUARE_BRACKET INTCONSTANT CLOSE_SQUARE_BRACKET identifierList OF type .
+
+    $default  reduce using rule 51 (arrayDeclaration)
+
+
+state 94
+
+   16 ifStatement: IF OPEN_ROUND_BRACKET condition CLOSE_ROUND_BRACKET compoundStatement ELSE compoundStatement .
+
+    $default  reduce using rule 16 (ifStatement)
+
+
+state 95
+
+   20 additionalCondition: AND condition .
+
+    $default  reduce using rule 20 (additionalCondition)
+
+
+state 96
+
+   21 additionalCondition: OR condition .
+
+    $default  reduce using rule 21 (additionalCondition)
